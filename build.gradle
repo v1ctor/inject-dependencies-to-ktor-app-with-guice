@@ -16,10 +16,11 @@ dependencies {
     implementation "io.ktor:ktor-server-netty:1.5.1"
     implementation "io.ktor:ktor-jackson:1.5.1"
 
-    implementation "com.google.inject:guice:4.2.3"
+    implementation "com.google.inject:guice:5.0.0-BETA-1"
 
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.10.2"
 
+    implementation "ch.qos.logback:logback-classic:1.2.3"
 }
 
 compileKotlin {
