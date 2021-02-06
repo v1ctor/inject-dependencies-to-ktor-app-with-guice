@@ -1,5 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.4.21'
+    id 'application'
 }
 
 group 'org.example'
@@ -8,6 +9,16 @@ version '1.0-SNAPSHOT'
 repositories {
     jcenter()
     maven { url "https://dl.bintray.com/kotlin/ktor" }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+ext {
+    kotlinMainClass = 'org.buldakov.ktor.guice.example.MainKt'
+}
+application {
+    mainClassName = kotlinMainClass
 }
 
 dependencies {
