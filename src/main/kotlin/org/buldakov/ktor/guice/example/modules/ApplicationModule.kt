@@ -2,8 +2,6 @@ package org.buldakov.ktor.guice.example.modules
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.inject.AbstractModule
-import com.google.inject.Inject
-import com.google.inject.Provider
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -13,13 +11,14 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import org.buldakov.ktor.guice.example.routes.Routes
 import org.slf4j.event.Level
+import javax.inject.Inject
 import javax.inject.Named
+import javax.inject.Provider
 
 class ApplicationModule : AbstractModule() {
     override fun configure() {
         install(RouteModule())
-        bind(ApplicationEngine::class.java).toProvider(ApplicationEngineProvider::class.java)
-            .asEagerSingleton()
+        bind(ApplicationEngine::class.java).toProvider(ApplicationEngineProvider::class.java).asEagerSingleton()
     }
 }
 
@@ -30,8 +29,8 @@ class ApplicationEngineProvider @Inject constructor(
     @Named("api") private val objectMapper: ObjectMapper,
     private val routes: java.util.Set<Routes>
 ) : Provider<ApplicationEngine> {
-    override fun get(): ApplicationEngine {
 
+    override fun get(): ApplicationEngine {
         return embeddedServer(Netty, host = bindAddress, port = webPort) {
             install(DefaultHeaders)
             install(CallLogging) {
