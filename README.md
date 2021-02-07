@@ -1,3 +1,5 @@
+## About
+This project was created as an example for the blog post https://handspringer.medium.com/kotlin-web-service-using-ktor-guice-and-jackson-cf6835d2c35b
 
 
 ## Start demo application 
