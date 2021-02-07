@@ -2,14 +2,14 @@ package org.buldakov.ktor.guice.example
 
 import com.google.inject.Guice
 import io.ktor.server.engine.*
-import org.buldakov.ktor.guice.example.modules.EngineModule
+import org.buldakov.ktor.guice.example.modules.ApplicationModule
 import org.buldakov.ktor.guice.example.modules.GreetingModule
 import org.buldakov.ktor.guice.example.modules.JsonModule
 import org.buldakov.ktor.guice.example.modules.PropertyModule
 
 fun main() {
     val modules = listOf(PropertyModule(),
-        EngineModule(),
+        ApplicationModule(),
         JsonModule(),
         GreetingModule())
 

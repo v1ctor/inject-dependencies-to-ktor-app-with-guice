@@ -10,6 +10,7 @@ import io.ktor.http.*
 import io.ktor.jackson.*
 import io.ktor.routing.*
 import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 import org.buldakov.ktor.guice.example.routes.Routes
 import org.slf4j.event.Level
 import javax.inject.Named
@@ -17,41 +18,35 @@ import javax.inject.Named
 class ApplicationModule : AbstractModule() {
     override fun configure() {
         install(RouteModule())
-        bind(ApplicationEngineEnvironment::class.java).toProvider(ApplicationEngineEnvironmentProvider::class.java)
+        bind(ApplicationEngine::class.java).toProvider(ApplicationEngineProvider::class.java)
             .asEagerSingleton()
     }
 }
 
 @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
-class ApplicationEngineEnvironmentProvider @Inject constructor(
+class ApplicationEngineProvider @Inject constructor(
     @Named("web.port") private val webPort: Int,
     @Named("web.bind") private val bindAddress: String,
     @Named("api") private val objectMapper: ObjectMapper,
     private val routes: java.util.Set<Routes>
-) : Provider<ApplicationEngineEnvironment> {
-    override fun get(): ApplicationEngineEnvironment {
+) : Provider<ApplicationEngine> {
+    override fun get(): ApplicationEngine {
 
-        return applicationEngineEnvironment {
-            module {
-                install(DefaultHeaders)
-                install(CallLogging) {
-                    level = Level.INFO
-                }
-                install(ContentNegotiation) {
-                    register(
-                        ContentType.Application.Json,
-                        JacksonConverter(objectMapper)
-                    )
-                }
-                routing {
-                    for (route in routes) {
-                        route.config().invoke(this)
-                    }
-                }
+        return embeddedServer(Netty, host = bindAddress, port = webPort) {
+            install(DefaultHeaders)
+            install(CallLogging) {
+                level = Level.INFO
             }
-            connector {
-                host = bindAddress
-                port = webPort
+            install(ContentNegotiation) {
+                register(
+                    ContentType.Application.Json,
+                    JacksonConverter(objectMapper)
+                )
+            }
+            routing {
+                for (route in routes) {
+                    route.config().invoke(this)
+                }
             }
         }
     }
