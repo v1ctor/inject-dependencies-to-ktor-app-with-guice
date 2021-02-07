@@ -26,7 +26,7 @@ class ApplicationModule : AbstractModule() {
 class ApplicationEngineProvider @Inject constructor(
     @Named("web.port") private val webPort: Int,
     @Named("web.bind") private val bindAddress: String,
-    @Named("api") private val objectMapper: ObjectMapper,
+    private val objectMapper: ObjectMapper,
     private val routes: java.util.Set<Routes>
 ) : Provider<ApplicationEngine> {
 
