@@ -1,8 +1,8 @@
 package org.buldakov.ktor.guice.example.providers
 
-class GreetingProvider {
+class GreetingProvider : IGreetingProvider{
 
-    fun getGreeting(): String {
+    override fun getGreeting(): String {
         return "Hello World!"
     }
 

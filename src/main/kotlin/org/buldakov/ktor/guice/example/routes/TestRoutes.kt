@@ -4,9 +4,10 @@ import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import org.buldakov.ktor.guice.example.providers.GreetingProvider
+import org.buldakov.ktor.guice.example.providers.IGreetingProvider
 import javax.inject.Inject
 
-class TestRoutes @Inject constructor(private val greetingProvider: GreetingProvider) : Routes {
+class TestRoutes @Inject constructor(private val greetingProvider: IGreetingProvider) : Routes {
 
     override fun config(): Route.() -> Unit = fun Route.() {
         get("status") {

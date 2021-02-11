@@ -8,6 +8,11 @@ This project was created as an example for the blog post https://handspringer.me
 ./gradlew run
 ```
 
+## Run tests
+```sh
+./gradlew test
+```
+
 ## Send requests to API
 ```sh
 curl localhost:8080/greet
